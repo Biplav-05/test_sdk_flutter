@@ -14,7 +14,7 @@
       "./script/update_version.sh pubspec.yaml ${version}"
     ],
     "after:release": [
-      "dart pub publish --force --token \"$NUGET_API_KEY\""
+      "dart pub publish --force --token \"$PUB_DEV_TOKEN\""
     ]
   },
   "git": {
