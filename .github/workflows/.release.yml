@@ -1,40 +1,83 @@
-{
-  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
-  "github": {
-    "release": true,
-    "releaseName": "Release ${version}",
-    "preRelease": false,
-    "autoGenerate": true,
-    "tokenRef": "TOKEN_GITHUB",
-    "contributors": true
-  },
-  "hooks": {
-    "before:bump": [
-      "chmod +x ./script/update_version.sh",
-      "./script/update_version.sh pubspec.yaml ${version}"
-    ],
-    "after:bump": [
-      "flutter pub get",
-      "dart pub token add https://pub.dev --env-var PUB_DEV_TOKEN"
-    ],
-    "after:release": [
-      "echo \$PUB_DEV_TOKEN > /dev/null",  // Ensuring token is referenced securely
-      "dart pub publish -f"
-    ]
-  },
-  "git": {
-    "commitMessage": "chore(release): ${version}",
-    "tagName": "V${version}",
-    "requireCleanWorkingDir": true,
-    "push": true
-  },
-  "npm": {
-    "publish": false
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": "angular",
-      "infile": "CHANGELOG.md"
-    }
-  }
-}
+name: Release & Publish to pub.dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Specify release type: regular, alpha, beta, or rc'
+        required: true
+        default: 'regular'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
+    steps:
+      
+      - name: Validate branch
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/main" ]]; then
+            echo "Error: This workflow can only be run on the main branch."
+            exit 1
+          fi
+
+      - name: Validate release type
+        run: |
+          if [[ "$RELEASE_TYPE" != "regular" && "$RELEASE_TYPE" != "alpha" && "$RELEASE_TYPE" != "beta" && "$RELEASE_TYPE" != "rc" ]]; then
+            echo "Error: Invalid release type '$RELEASE_TYPE'. It must be one of: regular, alpha, beta, or rc."
+            exit 1
+          fi
+
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1  # Update to v2
+        # with:
+        #   sdk: '3.24.3'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2  # Use the latest stable version
+        # with:
+        #   flutter-version: '1.17.0'  # You can specify a version if needed
+      
+      - name: Configure Flutter
+        run: flutter config
+
+      # - name: Install Flutter dependencies
+      #   run: flutter pub get
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Set Git user
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+
+      - name: Stage and commit changes (if any)
+        run: |
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: auto-commit changes before release"
+        
+
+      - name: Run release-it
+        run: |
+          if [ "$RELEASE_TYPE" == "regular" ]; then
+            npx release-it
+          else
+            npx release-it --preRelease="$RELEASE_TYPE"
+          fi
+        env:
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
+
+      - name: Print success message
+        if: success()
+        run: echo "Release and publishing completed successfully!"
+
+      - name: Handle failure
+        if: failure()
+        run: echo "Release process failed."
