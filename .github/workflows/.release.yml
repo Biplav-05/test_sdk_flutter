@@ -46,9 +46,6 @@ jobs:
       - name: Configure Flutter
         run: flutter config
 
-      # - name: Install Flutter dependencies
-      #   run: flutter pub get
-
       - name: Install Node.js dependencies
         run: npm ci
 
@@ -72,7 +69,15 @@ jobs:
           fi
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
-          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
+          
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+        
+      - name: Publish to pub.dev
+        run: dart pub publish --force
+        env:
+          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }} 
 
       - name: Print success message
         if: success()

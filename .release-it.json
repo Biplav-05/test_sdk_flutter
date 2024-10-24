@@ -9,16 +9,9 @@
     "contributors": true
   },
   "hooks": {
-    "before:bump": [
+    "af:bump": [
       "chmod +x ./script/update_version.sh",
       "./script/update_version.sh pubspec.yaml ${version}"
-    ],
-    "after:bump": [
-      "flutter pub get",
-      "dart pub token add https://pub.dev --env-var \"$PUB_DEV_TOKEN\""
-    ],
-    "after:release": [
-      "dart pub publish -f"
     ]
   },
   "git": {
