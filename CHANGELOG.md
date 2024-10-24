@@ -1,5 +1,7 @@
 
 
+## [0.2.4](https://github.com/Biplav-05/test_sdk_flutter/compare/V0.2.3...V0.2.4) (2024-10-24)
+
 ## 0.2.3 (2024-10-24)
 
 
