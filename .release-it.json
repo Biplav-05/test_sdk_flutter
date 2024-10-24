@@ -15,7 +15,6 @@
     ],
     "after:bump": [
       "flutter pub get",
-      "dart pub token remove https://pub.dev",
       "dart pub token add https://pub.dev --env-var \"$PUB_DEV_TOKEN\""
     ],
     "after:release": [
