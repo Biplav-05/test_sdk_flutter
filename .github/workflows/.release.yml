@@ -44,10 +44,10 @@ jobs:
         #   flutter-version: '1.17.0'  # You can specify a version if needed
       
       - name: Configure Flutter
-        run: flutter config --no-cli-animations
+        run: flutter config
 
-      - name: Install Flutter dependencies
-        run: flutter pub get
+      # - name: Install Flutter dependencies
+      #   run: flutter pub get
 
       - name: Install Node.js dependencies
         run: npm ci

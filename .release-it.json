@@ -14,6 +14,7 @@
       "./script/update_version.sh pubspec.yaml ${version}"
     ],
     "after:release": [
+      "flutter pub get",
       "dart pub token add https://pub.dev/packages/sdk_test_flutter --env-var \"$PUB_DEV_TOKEN\"",
       "dart pub publish --force"
     ]
