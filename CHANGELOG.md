@@ -1,5 +1,13 @@
 
 
+# [0.2.0](https://github.com/Biplav-05/test_sdk_flutter/compare/V0.1.0...V0.2.0) (2024-10-24)
+
+
+### Bug Fixes
+
+* one ([14aaa2f](https://github.com/Biplav-05/test_sdk_flutter/commit/14aaa2f143b95590e729f01437180c9925600f48))
+* refact it ([b25d98f](https://github.com/Biplav-05/test_sdk_flutter/commit/b25d98f3c3b3408b88b1e353b1081b4a881a3374))
+
 # 0.1.0 (2024-10-24)
 
 
