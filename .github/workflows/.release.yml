@@ -1,0 +1,78 @@
+name: Release & Publish to pub.dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Specify release type: regular, alpha, beta, or rc'
+        required: true
+        default: 'regular'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
+    steps:
+      # Validate that the workflow is running on the main branch
+      - name: Validate branch
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/main" ]]; then
+            echo "Error: This workflow can only be run on the main branch."
+            exit 1
+          fi
+
+      # Validate the release type provided as input
+      - name: Validate release type
+        run: |
+          if [[ "$RELEASE_TYPE" != "regular" && "$RELEASE_TYPE" != "alpha" && "$RELEASE_TYPE" != "beta" && "$RELEASE_TYPE" != "rc" ]]; then
+            echo "Error: Invalid release type '$RELEASE_TYPE'. It must be one of: regular, alpha, beta, or rc."
+            exit 1
+          fi
+
+      # Checkout the source code from the repository
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      # Setup Dart SDK
+      - name: Setup Dart
+        uses: subosito/dart-action@v2
+        with:
+          dart: 'stable'
+
+      # Install Flutter dependencies
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      # Install necessary Node.js dependencies
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      # Configure Git user with provided email and name
+      - name: Set Git user
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+
+      # Run release-it to handle version bumping, changelog generation, and deployment
+      - name: Run release-it
+        run: |
+          if [ "$RELEASE_TYPE" == "regular" ]; then
+            npx release-it
+          else
+            npx release-it --preRelease="$RELEASE_TYPE"
+          fi
+        env:
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}  # Pass the pub.dev token here
+
+      # Print a success message if the release was successful
+      - name: Print success message
+        if: success()
+        run: echo "Release and publishing completed successfully!"
+
+      # Print a failure message if the release failed
+      - name: Handle failure
+        if: failure()
+        run: echo "Release process failed."
