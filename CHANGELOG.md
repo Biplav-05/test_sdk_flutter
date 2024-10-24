@@ -1,5 +1,12 @@
 
 
+## 0.2.3 (2024-10-24)
+
+
+### Bug Fixes
+
+* it ([8e1db6e](https://github.com/Biplav-05/test_sdk_flutter/commit/8e1db6e8a9ddb4faf44228283e2ddc5de9571dca))
+
 ## 0.2.3-alpha.0 (2024-10-24)
 
 
