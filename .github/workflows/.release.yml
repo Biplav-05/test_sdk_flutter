@@ -35,12 +35,12 @@ jobs:
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1  # Update to v2
         with:
-          sdk: 'latest'
+          sdk: '3.24.3'
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2  # Use the latest stable version
         with:
-          flutter-version: 'latest'  # You can specify a version if needed
+          flutter-version: '1.17.0'  # You can specify a version if needed
 
       - name: Install Flutter dependencies
         run: flutter pub get
