@@ -1,6 +1,6 @@
 name: sdk_test_flutter
 description: "A test api project."
-version: 0.2.1
+version: 0.2.2
 homepage: https://biplav.ghimire.com.np
 
 environment:
