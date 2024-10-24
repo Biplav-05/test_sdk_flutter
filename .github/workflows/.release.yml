@@ -32,11 +32,15 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
-      # Setup Dart SDK using dart-lang/setup-dart
-      - name: Setup Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1  # Update to v2
         with:
-          sdk: 'stable'  # Use 'stable' to install the latest stable version
+          sdk: 'stable'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2  # Use the latest stable version
+        with:
+          flutter-version: 'stable'  # You can specify a version if needed
 
       - name: Install Flutter dependencies
         run: flutter pub get
