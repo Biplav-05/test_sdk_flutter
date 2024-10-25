@@ -75,12 +75,12 @@ jobs:
       # - name: release new  
       #   uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
           
-      - name: Install Flutter dependencies
-        run: flutter pub get
+      # - name: Install Flutter dependencies
+      #   run: flutter pub get
 
 
-      - name: Publish to pub.dev
-        run: dart pub publish -f
+      # - name: Publish to pub.dev
+      #   run: dart pub publish -f
 
       - name: Print success message
         if: success()
