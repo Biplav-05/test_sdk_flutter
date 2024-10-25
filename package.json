@@ -1,5 +1,5 @@
 {
-  "version": "0.2.3",
+  "version": "0.2.3-rc.1",
   "devDependencies": {
     "@release-it/conventional-changelog": "^9.0.1",
     "release-it": "^17.10.0"
