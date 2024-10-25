@@ -1,7 +1,8 @@
 name: sdk_test_flutter
 description: "A test api project."
-version: 0.2.5
+version: 0.3.0-rc.0
 homepage: https://biplav.ghimire.com.np
+repository: https://github.com/Biplav-05/test_sdk_flutter
 
 environment:
   sdk: ^3.5.0
