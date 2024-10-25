@@ -1,5 +1,12 @@
 
 
+# 0.3.0-rc.0 (2024-10-25)
+
+
+### Features
+
+* one ([940e48e](https://github.com/Biplav-05/test_sdk_flutter/commit/940e48e0bc7de32f70b91c842562a5f1b8740389))
+
 ## 0.2.5 (2024-10-24)
 
 
