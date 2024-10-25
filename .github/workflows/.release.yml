@@ -1,12 +1,5 @@
 name: Release & Publish to pub.dev
 
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       release-type:
-#         description: 'Specify release type: regular, alpha, beta, or rc'
-#         required: true
-#         default: 'regular'
 on:
   workflow_dispatch:
     inputs:
@@ -39,13 +32,6 @@ jobs:
             exit 1
           fi
 
-      - name: Validate release type
-        run: |
-          if [[ "$RELEASE_TYPE" != "regular" && "$RELEASE_TYPE" != "alpha" && "$RELEASE_TYPE" != "beta" && "$RELEASE_TYPE" != "rc" ]]; then
-            echo "Error: Invalid release type '$RELEASE_TYPE'. It must be one of: regular, alpha, beta, or rc."
-            exit 1
-          fi
-
       - name: Checkout source code
         uses: actions/checkout@v3
       # - name: abc
@@ -61,8 +47,6 @@ jobs:
         # with:
         #   flutter-version: '1.17.0'  # You can specify a version if needed
       
-      - name: Configure Flutter
-        run: flutter config
 
       - name: Install Node.js dependencies
         run: npm ci
