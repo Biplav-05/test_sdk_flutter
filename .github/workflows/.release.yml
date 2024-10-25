@@ -25,6 +25,7 @@ jobs:
   release:
     permissions:
       id-token: write
+      contents: write  # Required for creating releases
     runs-on: ubuntu-latest
     env:
       RELEASE_TYPE: ${{ github.event.inputs.release-type }}
