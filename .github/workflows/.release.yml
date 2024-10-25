@@ -36,11 +36,11 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # - name: Setup Dart SDK
-      #   uses: dart-lang/setup-dart@f0ead981b4d9a35b37f30d36160575d60931ec30  # Update to v2
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@f0ead981b4d9a35b37f30d36160575d60931ec30  # Update to v2
 
-      # - name: Install Flutter
-      #   uses: subosito/flutter-action@v2  # Use the latest stable version
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2  # Use the latest stable version
       
 
       - name: Install Node.js dependencies
@@ -66,16 +66,13 @@ jobs:
           fi
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
-
-      - name: release new  
-        uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
           
-      # - name: Install Flutter dependencies
-      #   run: flutter pub get
+      - name: Install Flutter dependencies
+        run: flutter pub get
 
 
-      # - name: Publish to pub.dev
-      #   run: dart pub publish -f
+      - name: Publish to pub.dev
+        run: dart pub publish -f
 
       - name: Print success message
         if: success()
