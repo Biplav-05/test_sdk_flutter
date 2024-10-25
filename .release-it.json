@@ -13,10 +13,9 @@
       "chmod +x ./script/update_version.sh",
       "./script/update_version.sh pubspec.yaml ${version}"
     ],
-    "after:bump": [
-      "flutter pub get"
-    ],
     "after:release": [
+      "flutter pub get",
+      "dart pub publish --dry-run",
       "dart pub publish -f"
     ]
   },
