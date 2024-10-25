@@ -1,5 +1,12 @@
 
 
+# 0.4.0 (2024-10-25)
+
+
+### Features
+
+* new ([a5e8fac](https://github.com/Biplav-05/test_sdk_flutter/commit/a5e8faccc2921187bb1cca209972868c8266ecc5))
+
 ## 0.3.2 (2024-10-25)
 
 
