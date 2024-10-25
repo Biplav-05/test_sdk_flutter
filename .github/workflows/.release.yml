@@ -1,5 +1,12 @@
 name: Release & Publish to pub.dev
 
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       release-type:
+#         description: 'Specify release type: regular, alpha, beta, or rc'
+#         required: true
+#         default: 'regular'
 on:
   workflow_dispatch:
     inputs:
@@ -7,9 +14,17 @@ on:
         description: 'Specify release type: regular, alpha, beta, or rc'
         required: true
         default: 'regular'
+        type: choice
+        options:
+          - regular
+          - alpha
+          - beta
+          - rc
 
 jobs:
   release:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     env:
       RELEASE_TYPE: ${{ github.event.inputs.release-type }}
@@ -78,8 +93,6 @@ jobs:
 
       - name: Publish to pub.dev
         run: dart pub publish -f
-        env:
-          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }} 
 
       - name: Print success message
         if: success()
