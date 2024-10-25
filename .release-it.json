@@ -16,7 +16,7 @@
   },
   "git": {
     "commitMessage": "chore(release): ${version}",
-    "tagName": "V${version}",
+    "tagName": "v${version}",
     "requireCleanWorkingDir": true,
     "push": true
   },
